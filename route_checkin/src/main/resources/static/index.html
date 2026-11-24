@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102d2b">
+  <title>城迹 · 城市路线打卡</title>
+  <meta name="description" content="发现城市路线，记录沿途风景，用脚步兑换惊喜。">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="/styles.css">
+  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" aria-label="主导航">
+      <a class="brand" href="/" aria-label="城迹首页">
+        <span class="brand-mark">城</span>
+        <span><strong>城迹</strong><small>CITY TRAILS</small></span>
+      </a>
+      <p class="side-label">探索空间</p>
+      <nav id="side-nav">
+        <button class="nav-item active" data-view="routes"><span class="nav-glyph">⌁</span>发现路线</button>
+        <button class="nav-item" data-view="map"><span class="nav-glyph">◎</span>地图点位</button>
+        <button class="nav-item" data-view="publish"><span class="nav-glyph">＋</span>发布路线</button>
+        <button class="nav-item" data-view="shop"><span class="nav-glyph">◇</span>积分商城</button>
+        <button class="nav-item" data-view="rankings"><span class="nav-glyph">▤</span>城市榜单</button>
+        <button class="nav-item" data-view="my"><span class="nav-glyph">◌</span>我的足迹</button>
+        <button class="nav-item admin-only hidden" data-view="admin"><span class="nav-glyph">⚙</span>管理中心</button>
+      </nav>
+      <div class="side-bottom">
+        <div class="side-note"><span class="note-star">✳</span><p>城市从不缺风景<br><strong>缺的是出发的你。</strong></p></div>
+        <p class="side-copy">城市路线打卡 · 课程项目</p>
+      </div>
+    </aside>
+
+    <div class="main-column">
+      <header class="topbar">
+        <div class="mobile-brand"><span class="brand-mark">城</span><strong>城迹</strong></div>
+        <span class="top-location"><span class="location-dot"></span> 城市探索正在进行</span>
+        <div class="top-actions">
+          <span id="balance-pill" class="balance-pill hidden">✦ <b>0</b> 积分</span>
+          <button id="account-button" class="account-button" type="button">登录 / 注册</button>
+        </div>
+      </header>
+
+      <main id="main-content">
+        <section id="hero" class="hero">
+          <div class="hero-copy">
+            <span class="eyebrow">WALK INTO THE CITY</span>
+            <h1>把城市，<br><em>走成自己的故事。</em></h1>
+            <p>从熟悉的街角出发，遇见新的风景。挑一条路线，今天就去打卡。</p>
+            <button class="hero-button" type="button" data-view="map">看看沿途点位 <span>↗</span></button>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="art-grid"></div>
+            <div class="art-loop loop-one"></div><div class="art-loop loop-two"></div>
+            <span class="art-pin pin-one">01</span><span class="art-pin pin-two">02</span><span class="art-pin pin-three">03</span>
+            <span class="art-caption">FIND YOUR WAY · 2026</span>
+          </div>
+        </section>
+        <section id="view-root" class="view-root" aria-live="polite"></section>
+      </main>
+    </div>
+  </div>
+
+  <nav class="mobile-nav" aria-label="手机导航">
+    <button data-view="routes">路线</button>
+    <button data-view="map">地图</button>
+    <button data-view="publish">发布</button>
+    <button data-view="shop">商城</button>
+    <button data-view="rankings">榜单</button>
+    <button data-view="my">我的</button>
+    <button class="admin-only hidden" data-view="admin">管理</button>
+  </nav>
+
+  <dialog id="auth-dialog" class="modal auth-modal">
+    <button class="modal-close" data-close="auth-dialog" aria-label="关闭">×</button>
+    <span class="eyebrow">WELCOME BACK</span>
+    <h2 id="auth-heading">登录城迹</h2>
+    <p class="modal-intro">登录后可发布路线、收藏和打卡。</p>
+    <div class="auth-switch"><button id="login-tab" class="selected" type="button">登录</button><button id="register-tab" type="button">注册</button></div>
+    <form id="auth-form">
+      <label>用户名<input name="username" autocomplete="username" required minlength="3"></label>
+      <label id="nickname-field" class="hidden">昵称<input name="nickname" autocomplete="nickname"></label>
+      <label>密码<input name="password" type="password" autocomplete="current-password" required minlength="8"></label>
+      <button class="primary-button full" id="auth-submit" type="submit">登录</button>
+    </form>
+    <p class="fine-print">新账号需管理员审核后才能登录。账号信息仅保留在当前页面内存中。</p>
+  </dialog>
+
+  <dialog id="detail-dialog" class="modal detail-modal">
+    <button class="modal-close" data-close="detail-dialog" aria-label="关闭">×</button>
+    <div id="detail-content"></div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
